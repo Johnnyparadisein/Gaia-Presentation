@@ -6,7 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Roboto:wght@300;400;500;700&amp;family=Noto+Sans+Georgian:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Noto+Sans+Georgian:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --primary-font: 'Poppins', 'Noto Sans Georgian', sans-serif;
@@ -93,6 +94,9 @@
         }
         .is-qa-slide.slide-container, .is-first-slide.slide-container {
             background: radial-gradient(ellipse at center, var(--color-primary-light) 0%, var(--color-primary) 70%);
+        }
+        .is-first-slide.slide-container, .is-qa-slide.slide-container { /* Added this rule */
+            max-width: 1400px; /* Increased max-width */
         }
         
         .slide-header { /* For non-first slides */
@@ -189,12 +193,31 @@
             color: var(--color-text-dark); /* Enhance hover for the whole list item */
         }
         .slide-content-wrapper li::before {
-            content: "\276F"; /* Heavy single turned comma quotation mark ornament */
-            color: var(--color-secondary); position: absolute;
-            left: 0.5em;  font-size: 1.1em; font-weight: normal; /* Adjusted */
+            content: ''; /* Ensure no old content is displayed */
+            /* color: var(--color-secondary); */ /* REMOVED - Handled by <i> tag */
+            position: absolute; /* Keep for positioning if it affects layout */
+            left: 0.3em;  /* From original rule */
+            top: 0.1em; /* Adjust for vertical alignment */
+            /* margin-right: 0.6em; */ /* REMOVED - Handled by <i> tag or li padding */
+            /* font-size: 0.9em; */ /* REMOVED - Handled by <i> tag */
+        }
+        .slide-content-wrapper li:hover::before { 
+            /* color: var(--color-accent); transform: translateX(2px); */ /* REMOVED - icon hover handled by icon itself or li:hover */
+        }
+        .slide-content-wrapper li i { /* Styling for FontAwesome icons within list items */
+            display: inline-block; /* Ensures proper box model */
+            font-style: normal;    /* Override potential italic from <i> tag */
+            line-height: 1;        /* Prevents extra vertical space */
+            vertical-align: middle; /* Align icon with text */
+            margin-right: 0.7em;
+            color: var(--color-secondary);
+            font-size: 0.9em; /* Match icon size */
             transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
         }
-        .slide-content-wrapper li:hover::before { color: var(--color-accent); transform: translateX(2px); }
+        .slide-content-wrapper li:hover i {
+            color: var(--color-accent);
+            transform: translateX(2px);
+        }
         .slide-content-wrapper strong, .slide-content-wrapper b { font-weight: 600; color: var(--color-text-dark); /* White for strong */ }
         .slide-content-wrapper i, .slide-content-wrapper em { 
             color: var(--color-accent); 
@@ -340,7 +363,13 @@
         }
         .resource-section ul { padding-left: 15px; }
         .resource-section li { margin-bottom: 0.8em !important; }
-        .resource-section li::before { color: var(--color-secondary); content: "\276F"; font-size: 1.1em; left: 0.2em !important; }
+        .resource-section li::before { 
+            content: ''; /* Explicitly remove the conflicting Unicode character */
+            /* color: var(--color-secondary); */ /* REMOVED - Handled by <i> tag */
+            /* font-size: 1.1em; */ /* REMOVED - Handled by <i> tag */
+            left: 0.2em !important; /* Keep this if it was intentional for spacing in resource lists */
+            /* position: absolute; implicitly inherited or not needed if content is empty and it doesn't have other layout styles */
+        }
         .resource-section .resource-note { display: block; font-size: 0.9em; color: var(--color-text-light); margin-left: 0.2em; font-style: italic; }
 
         .slide-centered-text { 
@@ -420,12 +449,20 @@
             box-shadow: var(--shadow-soft);
         }
 
+        /* Ensure social link icons are white */
+        .social-link i {
+            color: #FFFFFF !important;
+        }
+
         /* --- Navigation Area --- */
         .navigation-buttons { 
             display: flex; justify-content: space-between; align-items: center; 
             width: 100%; max-width: 1300px; 
             margin-top: 18px; 
             padding: 0 15px; 
+        }
+        .is-first-slide ~ .navigation-buttons, .is-qa-slide ~ .navigation-buttons { /* Added this rule for nav buttons */
+            max-width: 1400px; /* Match wider slide container */
         }
 
         .nav-button {
@@ -563,7 +600,13 @@
         /* Media Queries for Responsiveness - will need significant review for GAIA theme */
         @media (max-width: 1490px) { 
             .slide-container { max-width: 1280px; max-height: 680px; } 
+            .is-first-slide.slide-container, .is-qa-slide.slide-container { /* Added this rule */
+                 max-width: 1380px; /* Adjusted for this breakpoint */
+            }
             .navigation-buttons { max-width: 1280px; }
+            .is-first-slide ~ .navigation-buttons, .is-qa-slide ~ .navigation-buttons { /* Added this rule for nav buttons */
+                max-width: 1380px; /* Match wider slide container */
+            }
             .is-first-slide .slide-header .slide-title { font-size: 3.0em; } /* Adjusted */
             .is-first-slide .slide-header .slide-subtitle { font-size: 1.4em; } /* Adjusted */
             .slide-header .slide-title, .slide-title-centered { font-size: 2.1em; } /* Adjusted */
@@ -576,7 +619,13 @@
 
         @media (max-width: 1350px) { 
             .slide-container { max-width: 1100px; max-height: 660px; } 
+            .is-first-slide.slide-container, .is-qa-slide.slide-container { /* Added this rule */
+                max-width: 1200px; /* Adjusted for this breakpoint */
+            }
             .navigation-buttons { max-width: 1100px; }
+            .is-first-slide ~ .navigation-buttons, .is-qa-slide ~ .navigation-buttons { /* Added this rule for nav buttons */
+                max-width: 1200px; /* Match wider slide container */
+            }
             .is-first-slide .slide-header .slide-title { font-size: 2.8em; } /* Adjusted */
             .is-first-slide .slide-header .slide-subtitle { font-size: 1.3em; } /* Adjusted */
             .slide-header .slide-title, .slide-title-centered { font-size: 2.0em; } /* Adjusted */
@@ -586,7 +635,13 @@
 
         @media (max-width: 1200px) { 
             .slide-container { max-width: 960px; max-height: 630px; } 
+            .is-first-slide.slide-container, .is-qa-slide.slide-container { /* Added this rule */
+                max-width: 1060px; /* Adjusted for this breakpoint */
+            }
             .navigation-buttons { max-width: 960px; }
+            .is-first-slide ~ .navigation-buttons, .is-qa-slide ~ .navigation-buttons { /* Added this rule for nav buttons */
+                max-width: 1060px; /* Match wider slide container */
+            }
             .is-first-slide .slide-header .slide-title { font-size: 2.6em; } /* Adjusted */
             .is-first-slide .slide-header .slide-subtitle { font-size: 1.2em; } /* Adjusted */
             .slide-header .slide-title, .slide-title-centered { font-size: 1.9em; } /* Adjusted */
@@ -636,6 +691,37 @@
             .slide-centered-text h2 { font-size: 1.6em; margin-bottom: 6px; } /* Adjusted */
             .social-links { margin-top: 12px; font-size: 0.95em; } /* Adjusted */
         }
+
+        /* Added more specific rules for Font Awesome icons to ensure correct font-family and font-weight */
+        .case-study-section .label i.fas,
+        .tool-highlight strong i.fas,
+        .idea-spark strong i.fas,
+        .slide-content-wrapper li i.fas,
+        .resource-section h3 i.fas,
+        .resource-section li i.fas {
+            font-family: 'Font Awesome 6 Free', 'FontAwesome', sans-serif; /* Ensure FA font is primary */
+            font-weight: 900; /* For solid icons */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: auto;
+            font-style: normal; /* Ensure not italicized by parent */
+        }
+
+        .case-study-section .label i.fab,
+        .tool-highlight strong i.fab,
+        .idea-spark strong i.fab,
+        .slide-content-wrapper li i.fab,
+        .resource-section h3 i.fab,
+        .resource-section li i.fab,
+        .social-link i.fab { /* Added this line */
+            font-family: 'Font Awesome 6 Brands', 'FontAwesome', sans-serif; /* Ensure FA Brands font is primary */
+            font-weight: 400; /* For brand icons (usually 400 or normal) */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: auto;
+            font-style: normal; /* Ensure not italicized by parent */
+        }
+        /* End of added rules for Font Awesome icons */
     </style>
 </head>
 <body>
@@ -674,9 +760,9 @@
         </transition>
 
         <div class="navigation-buttons">
-            <button @click="prevSlide" :disabled="currentSlideIndex === 0" class="nav-button">წინა</button>
+            <button @click="prevSlide" :disabled="currentSlideIndex === 0" class="nav-button"><i class="fas fa-arrow-left"></i> წინა</button>
             <div class="slide-counter">{{ currentSlideIndex + 1 }} / {{ slides.length }}</div>
-            <button @click="nextSlide" :disabled="currentSlideIndex === slides.length - 1" class="nav-button">შემდეგი</button>
+            <button @click="nextSlide" :disabled="currentSlideIndex === slides.length - 1" class="nav-button">შემდეგი <i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
@@ -712,7 +798,7 @@
                             title: "გამარჯობა! მე ვარ ჯონი",
                             subtitle: "გრაფიკული დიზაინერი • AI არქიტექტორი | ლექტორი, თბილისის კომუნიკაციის სკოლა",
                             content: `
-                                <p>გრაფიკული დიზაინისა და AI-ს კვეთაზე მრავალწლიანი გამოცდილებით, ვმუშაობდი ისეთ კომპანიებთან, როგორიცაა <i>Redberry, Upwork, Dunkin'</i> და <i>Subway</i>. AI ჩემთვის კრეატიულობის ახალი ჰორიზონტია, რომელიც ტრადიციულ დიზაინს სცდება.</p>
+                                <p>გრაფიკული დიზაინისა და AI-ს კვეთაზე მრავალწლიანი გამოცდილებით, ვმუშაობდი ისეთ კომპანიებთან, როგორიცაა <i>Redberry, Dunkin', Subway, შავი ლომი</i> და <i>MachandMach</i>. AI ჩემთვის კრეატიულობის ახალი ჰორიზონტია, რომელიც ტრადიციულ დიზაინს სცდება.</p>
                                 <p>აქტიურად ვიყენებ <i>Stable Diffusion, LoRA მოდელებს, ControlNets</i> და <i>Adobe Creative Suite</i>-ს. ამ ცოდნას ვუზიარებ სტუდენტებს <i>თბილისის კომუნიკაციის სკოლაში</i>, სადაც ვასწავლი გენერაციულ AI-ს. მჯერა, AI არის აწმყო და მომავალი კრეატიულ ინდუსტრიაში.</p>
                                 <p><em>ამ ვორქშოპში გაგიზიარებთ როგორც კონკრეტულ ქეისებს, ასევე პრაქტიკულ რჩევებს AI ინსტრუმენტების გამოყენებასთან დაკავშირებით.</em></p>
                             `
@@ -722,19 +808,19 @@
                             subtitle: "მრავალფეროვნების სინთეზი ერთ ვიზუალში",
                             content: `
                                 <div class="case-study-section">
-                                    <span class="label">გამოწვევა:</span>
+                                    <span class="label"><i class="fas fa-bullseye"></i> გამოწვევა:</span>
                                     <p class="description">მთავარი ამოცანა იყო მრავალი ქართველი მხატვრის მიერ შექმნილი, განსხვავებული სტილის ესკიზებიდან ერთიანი, უნიკალური დიზაინის საფოსტო მარკის შექმნა. საჭირო იყო ვიზუალი, რომელიც ჰარმონიულად ასახავდა საერთო თემატიკას და ამავდროულად ინარჩუნებდა მხატვრულ ღირებულებას.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">AI-ს როლი:</span>
+                                    <span class="label"><i class="fas fa-microchip"></i> AI-ს როლი:</span>
                                     <p class="description">გამოვიყენეთ AI გამოსახულების სინთეზის მოწინავე ტექნიკები. მოდელები გაწვრთნილი იქნა სხვადასხვა სტილისა და ხედვის ნამუშევრებზე, რათა მოეხდინათ მათი შემოქმედებითი სინთეზი და გენერირება ერთ, გამორჩეულ ვიზუალად.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">შედეგი:</span>
+                                    <span class="label"><i class="fas fa-check-circle"></i> შედეგი:</span>
                                     <p class="description">შეიქმნა საქართველოს ფოსტის ისტორიაში პირველი, ხელოვნური ინტელექტის მიერ გენერირებული საფოსტო მარკა, რომელმაც წარმატებით გააერთიანა მრავალფეროვანი არტისტული ხედვები – <em>ინოვაცია, რომელიც ხაზს უსვამს ტექნოლოგიისა და ხელოვნების შერწყმის შესაძლებლობებს.</em></p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">ვიდეო მასალა:</span>
+                                    <span class="label"><i class="fas fa-video"></i> ვიდეო მასალა:</span>
                                     <p class="description"><a href="https://www.facebook.com/share/v/1YuX2VyMC5/?mibextid=wwXIfr" target="_blank">ნახეთ ვიდეო Facebook-ზე</a></p>
                                 </div>
                             `
@@ -744,19 +830,19 @@
                             subtitle: "კრეატიული ვიზუალიზაცია მუსიკალური კლიპისთვის",
                             content: `
                                 <div class="case-study-section">
-                                    <span class="label">პროექტი:</span>
+                                    <span class="label"><i class="fas fa-tasks"></i> პროექტი:</span>
                                     <p class="description">მიზანი იყო უნიკალური და მიმზიდველი, ანიმე სტილის მუსიკალური ვიდეოს შექმნა, რომელიც ახალგაზრდულ აუდიტორიაზე იქნებოდა გათვლილი და ეფექტურად გადმოსცემდა კამპანიის მთავარ მესიჯს.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">გამოყენებული AI ტექნოლოგიები:</span>
+                                    <span class="label"><i class="fas fa-cogs"></i> გამოყენებული AI ტექნოლოგიები:</span>
                                     <p class="description">პროექტში აქტიურად გამოვიყენეთ <i>Stable Diffusion</i> ვიზუალური ბაზის გენერაციისთვის. სპეციფიკური ანიმე სტილის მისაღწევად დატრენინგდა <i>მორგებული LoRA მოდელები</i>, ხოლო პერსონაჟების პოზებისა და კომპოზიციის ზუსტი კონტროლისთვის <i>ControlNets</i>-ის შესაძლებლობები გამოვიყენეთ.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">შედეგი:</span>
+                                    <span class="label"><i class="fas fa-award"></i> შედეგი:</span>
                                     <p class="description">შეიქმნა თვალშისაცემი და ორიგინალური ვიდეო რგოლი, რომელმაც წარმატებით შეაწყო მუსიკა და AI-გენერირებული ანიმაცია, მოიპოვა ფართო გამოხმაურება და გაზარდა ბრენდის ცნობადობა – <em>რაც აჩვენებს AI-ს ძალას მიზნობრივი, ეფექტური ვიზუალური კომუნიკაციის შექმნაში.</em></p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">ვიდეო მასალა:</span>
+                                    <span class="label"><i class="fas fa-play-circle"></i> ვიდეო მასალა:</span>
                                     <p class="description"><a href="https://www.facebook.com/share/v/1Bnkbwe6gQ/?mibextid=wwXIfr" target="_blank">ნახეთ ვიდეო Facebook-ზე</a></p>
                                 </div>
                             `
@@ -766,19 +852,19 @@
                             subtitle: "ბრენდირებული ვიზუალური კონტენტი AI-ს დახმარებით",
                             content: `
                                 <div class="case-study-section">
-                                    <span class="label">ამოცანა:</span>
+                                    <span class="label"><i class="fas fa-clipboard-list"></i> ამოცანა:</span>
                                     <p class="description">ლუდსახარშ \"შავი ლომისა\" და მოდის კომპანია \"MachandMach\"-ისთვის საჭირო იყო ბრენდის ვიზუალური იდენტობის შესაბამისი, უნიკალური და კრეატიული კონტენტის გენერაცია. მთავარი გამოწვევა იყო AI-ს მიერ შექმნილი ვიზუალების ზუსტი მორგება თითოეული ბრენდის სპეციფიკურ სტილსა და ფასეულობებზე.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">AI სტრატეგია:</span>
+                                    <span class="label"><i class="fas fa-sitemap"></i> AI სტრატეგია:</span>
                                     <p class="description">თითოეული ბრენდისთვის დატრენინგდა სპეციალიზებული <i>Flux LoRA</i> მოდელები. ეს მიდგომა საშუალებას გვაძლევდა, გენერირებულიყო ვიზუალები, რომლებიც არა მხოლოდ ესთეტიურად მიმზიდველი, არამედ ბრენდის ხასიათის ზუსტი ამსახველიც იყო.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">შედეგი:</span>
+                                    <span class="label"><i class="fas fa-palette"></i> შედეგი:</span>
                                     <p class="description">მივიღეთ მაღალი ხარისხის, უნიკალური ბრენდირებული ვიზუალური მასალა, რომელიც ეფექტურად გამოიყენება მარკეტინგულ კამპანიებსა და სოციალურ მედიაში, ზრდის მომხმარებლის ჩართულობას და აძლიერებს ბრენდის იდენტობას – <em>ხაზს უსვამს AI-ს უნარს, შექმნას ღრმად პერსონალიზებული ვიზუალი.</em></p>
                                 </div>
                                  <div class="case-study-section">
-                                    <span class="label">დამატებითი ინფორმაცია:</span>
+                                    <span class="label"><i class="fas fa-info-circle"></i> დამატებითი ინფორმაცია:</span>
                                     <p class="description"><a href="https://www.facebook.com/blacklion.ge?mibextid=wwXIfr&mibextid=wwXIfr" target="_blank">შავი ლომი Facebook-ზე</a></p>
                                 </div>
                             `
@@ -788,15 +874,15 @@
                             subtitle: "დიზაინის პროცესების დაჩქარება AI-თი",
                             content: `
                                 <div class="case-study-section">
-                                    <span class="label">პრობლემა:</span>
+                                    <span class="label"><i class="fas fa-exclamation-triangle"></i> პრობლემა:</span>
                                     <p class="description">კომპანია Redberry-ში არსებობდა დიზაინის სამუშაო პროცესების დაჩქარებისა და ეფექტურობის გაზრდის საჭიროება, განსაკუთრებით განმეორებადი ამოცანებისა და ვიზუალური კონცეფციების სწრაფი შემუშავების კუთხით.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">AI ინტეგრაცია:</span>
+                                    <span class="label"><i class="fas fa-project-diagram"></i> AI ინტეგრაცია:</span>
                                     <p class="description">განხორციელდა <i>Stable Diffusion WebUI</i>-ს ინტეგრაცია არსებულ სამუშაო პროცესებში. შეიქმნა მრავალჯერადი გამოყენების ვიზუალური რესურსების (assets) გენერაციის სისტემა, რომლებიც შემდგომში მარტივად ადაპტირდება სხვადასხვა კონტენტისა და პროექტისთვის.</p>
                                 </div>
                                 <div class="case-study-section">
-                                    <span class="label">შედეგი:</span>
+                                    <span class="label"><i class="fas fa-rocket"></i> შედეგი:</span>
                                     <p class="description">მნიშვნელოვნად შემცირდა დრო დიზაინის შექმნაზე, გაიზარდა გუნდის პროდუქტიულობა და კრეატიული იდეების სწრაფი ვიზუალიზაციის შესაძლებლობა. ამან კომპანიას საშუალება მისცა, უფრო მოქნილად და ეფექტურად ეპასუხა კლიენტების მოთხოვნებზე – <em>რაც პირდაპირ აისახება ბიზნესის ეფექტურობაზე.</em></p>
                                 </div>
                                 <p><em>ამ ქეისების მიმოხილვის შემდეგ, ვნახოთ, როგორ მუშაობს AI ტექსტისა და ვიზუალის სინთეზში უფრო ფართოდ.</em></p>
@@ -810,10 +896,10 @@
                                 <p>წარმოიდგინეთ: LLM-ს შეუძლია შექმნას დეტალური, კრეატიული აღწერა (prompt) სურათისთვის, რომელსაც შემდეგ ვიზუალური AI გარდაქმნის უნიკალურ გამოსახულებად. ეს არ არის ცალმხრივი პროცესი; გენერირებულმა სურათმა შეიძლება შთააგონოს ტექსტის შემდგომი დახვეწა, რაც თავის მხრივ იწვევს ვიზუალის ახალ ვერსიას. ეს არის <b>იტერაციული, დინამიური პროცესი</b>, რომელიც კრეატიულობას ახალ საფეხურზე აჰყავს.</p>
                                 <p>ეს სინერგია გვიხსნის გზას სრულიად ახალი სამუშაო პროცესებისკენ:</p>
                                 <ul>
-                                    <li><b>სწრაფი პროტოტიპირება:</b> იდეიდან ვიზუალურ კონცეფციამდე წუთებში.</li>
-                                    <li><b>პერსონალიზებული კონტენტი:</b> მარკეტინგული მასალების (ტექსტი + ვიზუალი) მასშტაბური ადაპტაცია სხვადასხვა აუდიტორიისთვის.</li>
-                                    <li><b>კონცეპტუალური დიზაინი:</b> პროდუქტის, სარეკლამო კამპანიის ან თუნდაც თხრობითი სცენარების სწრაფი ვიზუალიზაცია.</li>
-                                    <li><b>ავტომატიზებული კონტენტის ნაკადები:</b> მაგალითად, სტატიის ძირითადი პუნქტებიდან ავტომატურად გენერირებული ილუსტრაციები.</li>
+                                    <li><i class="fas fa-shipping-fast"></i><b>სწრაფი პროტოტიპირება:</b> იდეიდან ვიზუალურ კონცეფციამდე წუთებში.</li>
+                                    <li><i class="fas fa-users-cog"></i><b>პერსონალიზებული კონტენტი:</b> მარკეტინგული მასალების (ტექსტი + ვიზუალი) მასშტაბური ადაპტაცია სხვადასხვა აუდიტორიისთვის.</li>
+                                    <li><i class="fas fa-drafting-compass"></i><b>კონცეპტუალური დიზაინი:</b> პროდუქტის, სარეკლამო კამპანიის ან თუნდაც თხრობითი სცენარების სწრაფი ვიზუალიზაცია.</li>
+                                    <li><i class="fas fa-robot"></i><b>ავტომატიზებული კონტენტის ნაკადები:</b> მაგალითად, სტატიის ძირითადი პუნქტებიდან ავტომატურად გენერირებული ილუსტრაციები.</li>
                                 </ul>
                                 <p>ეს მიდგომა მომხმარებელს მეტ კონტროლს აძლევს და საშუალებას იძლევა, შეიქმნას ბევრად უფრო ზუსტი, კომპლექსური და მხატვრულად ღირებული გამოსახულებები. თუმცა, იგი ასევე მოითხოვს prompt-ის უფრო ღრმა გააზრებასა და ექსპერიმენტირებას.</p>
                             `
@@ -838,9 +924,9 @@
                                 <p>ახალი თაობის მოდელები, როგორიცაა <i>FLUX</i> და <i>Stable Diffusion 3.5</i>, ბევრად უკეთ იგებენ <b>ბუნებრივ, აღწერით ენას</b>. ისინი აღარ არიან მხოლოდ ტეგებზე დამოკიდებული; მათ შეუძლიათ გააანალიზონ წინადადებების სტრუქტურა, კონტექსტი და ნიუანსები. ეს ნიშნავს, რომ prompt-ები შეიძლება იყოს უფრო დეტალური, თხრობითი და კომპლექსური.</p>
                                 <p>ამ მოდელებთან მუშაობისას, მნიშვნელოვანია არა მხოლოდ <em>რა</em> გინდათ, არამედ <em>როგორ</em> არის ეს აღწერილი. ყურადღება ექცევა:</p>
                                 <ul>
-                                    <li><b>სცენის დეტალურ აღწერას:</b> ობიექტების განლაგება, ურთიერთქმედება, გარემო.</li>
-                                    <li><b>სტილისტურ ნიუანსებს:</b> განათება, კამერის კუთხე, ფერთა პალიტრა, ემოცია.</li>
-                                    <li><b>კომპოზიციურ მითითებებს:</b> "close-up shot of...", "wide angle view of...", "seen from above...".</li>
+                                    <li><i class="fas fa-image"></i><b>სცენის დეტალურ აღწერას:</b> ობიექტების განლაგება, ურთიერთქმედება, გარემო.</li>
+                                    <li><i class="fas fa-palette"></i><b>სტილისტურ ნიუანსებს:</b> განათება, კამერის კუთხე, ფერთა პალიტრა, ემოცია.</li>
+                                    <li><i class="fas fa-camera-retro"></i><b>კომპოზიციურ მითითებებს:</b> "close-up shot of...", "wide angle view of...", "seen from above...".</li>
                                 </ul>
                                 <div class="prompt-example">
                                     <span class="model-name">FLUX / SD 3.5 სტილის Prompt:</span>
@@ -856,9 +942,9 @@
                                 <p><b>LoRA (Low-Rank Adaptation)</b> არის მძლავრი ტექნიკა, რომელიც საშუალებას გვაძლევს, მოვახდინოთ წინასწარ გაწვრთნილი დიდი AI მოდელების (მაგალითად, Stable Diffusion) <b>დახვეწა (fine-tuning)</b> შედარებით მცირე რაოდენობის მონაცემებით. LoRA-ს მთავარი უპირატესობა ისაა, რომ იგი არ ცვლის ძირითადი მოდელის წონებს, არამედ ამატებს მცირე, ადაპტირებად ფენებს.</p>
                                 <p>ეს ნიშნავს, რომ ჩვენ შეგვიძლია ვასწავლოთ მოდელს:</p>
                                 <ul>
-                                    <li><b>ახალი ვიზუალური სტილები:</b> მაგალითად, კონკრეტული მხატვრის სტილი, უნიკალური გრაფიკული დიზაინი, ან თუნდაც თქვენი საკუთარი ბრენდის ვიზუალური იდენტობა.</li>
-                                    <li><b>კონკრეტული ობიექტები ან პერსონაჟები:</b> თქვენი პროდუქტი, ლოგო, ან თუნდაც კონკრეტული ადამიანის სახე (ეთიკური მოსაზრებების გათვალისწინებით).</li>
-                                    <li><b>სპეციფიკური კონცეფციები:</b> რომლებიც ძირითად მოდელში არ იყო კარგად წარმოდგენილი.</li>
+                                    <li><i class="fas fa-paint-brush"></i><b>ახალი ვიზუალური სტილები:</b> მაგალითად, კონკრეტული მხატვრის სტილი, უნიკალური გრაფიკული დიზაინი, ან თუნდაც თქვენი საკუთარი ბრენდის ვიზუალური იდენტობა.</li>
+                                    <li><i class="fas fa-cube"></i><b>კონკრეტული ობიექტები ან პერსონაჟები:</b> თქვენი პროდუქტი, ლოგო, ან თუნდაც კონკრეტული ადამიანის სახე (ეთიკური მოსაზრებების გათვალისწინებით).</li>
+                                    <li><i class="fas fa-lightbulb"></i><b>სპეციფიკური კონცეფციები:</b> რომლებიც ძირითად მოდელში არ იყო კარგად წარმოდგენილი.</li>
                                 </ul>
                                 <p>LoRA მოდელები, როგორც წესი, ძალიან მცირე ზომისაა (რამდენიმე მეგაბაიტიდან რამდენიმე ასეულ მეგაბაიტამდე), რაც მათ შენახვას, გაზიარებას და გამოყენებას ძალიან მარტივს ხდის. ისინი დინამიურად ერთვებიან ძირითად მოდელს გენერაციის პროცესში და საშუალებას გვაძლევენ, მივიღოთ მაღალპერსონალიზებული შედეგები.</p>
                                 <p>მაგალითად, ჩემს პროექტებში <i>შავი ლომისა</i> და <i>MachandMach</i>-ისთვის, სწორედ <b>Flux LoRA</b> მოდელების დატრენინგებით შევძელით ბრენდირებული, უნიკალური ვიზუალური კონტენტის შექმნა.</p>
@@ -871,11 +957,11 @@
                                 <p>AI-ს სამყაროში ნავიგაცია და სწორი ინსტრუმენტების შერჩევა ხშირად გამოწვევაა. მოდით, განვიხილოთ რამდენიმე გამორჩეული პლატფორმა, რომლებიც დაგეხმარებათ კრეატიულობისა და ტექნოლოგიის ეფექტურად შერწყმაში:</p>
                                 
                                 <div class="tool-highlight">
-                                    <p><strong>Poe.com:</strong> ეს არის ინტეგრირებული სისტემა, რომელიც ერთ სივრცეში აერთიანებს წამყვან <b>LLM მოდელებს, გამოსახულების გენერატორებს</b> და აუდიო/ვიდეო ინსტრუმენტებსაც კი. Poe.com იდეალურია მათთვის, ვინც ეძებს ბალანსს კრეატიულ თავისუფლებასა და ტექნიკურ შესაძლებლობებს შორის.</p>
+                                    <p><strong><i class="fas fa-atom"></i> Poe.com:</strong> ეს არის ინტეგრირებული სისტემა, რომელიც ერთ სივრცეში აერთიანებს წამყვან <b>LLM მოდელებს, გამოსახულების გენერატორებს</b> და აუდიო/ვიდეო ინსტრუმენტებსაც კი. Poe.com იდეალურია მათთვის, ვინც ეძებს ბალანსს კრეატიულ თავისუფლებასა და ტექნიკურ შესაძლებლობებს შორის.</p>
                                 </div>
 
                                 <div class="tool-highlight">
-                                    <p><strong>Recraft.ai:</strong> თუ თქვენი მიზანია <b>ბრენდისთვის უსაფრთხო და სტილისტურად თანმიმდევრული ვიზუალური მასალების შექმნა</b>, Recraft.ai შესანიშნავი არჩევანია. ეს პლატფორმა განსაკუთრებით სასარგებლოა <i>ელექტრონული კომერციისთვის და დიზაინ სტუდიებისთვის</i>.</p>
+                                    <p><strong><i class="fas fa-vector-square"></i> Recraft.ai:</strong> თუ თქვენი მიზანია <b>ბრენდისთვის უსაფრთხო და სტილისტურად თანმიმდევრული ვიზუალური მასალების შექმნა</b>, Recraft.ai შესანიშნავი არჩევანია. ეს პლატფორმა განსაკუთრებით სასარგებლოა <i>ელექტრონული კომერციისთვის და დიზაინ სტუდიებისთვის</i>.</p>
                                 </div>
                                 
                                 <p>ამ სპეციალიზებული პლატფორმების გარდა, არ უნდა დავივიწყოთ ისეთი ფუნდამენტური ინსტრუმენტები, როგორიცაა <b>ChatGPT</b> ტექსტთან მუშაობისთვის და <b>Stable Diffusion</b> (მაგალითად, WebUI ვერსიები) მათთვის, ვისაც სურს გამოსახულების გენერაციის პროცესის ღრმა კონტროლი.</p>
@@ -888,15 +974,15 @@
                                 <p>ხელოვნური ინტელექტი არა მხოლოდ სამუშაო ინსტრუმენტია, არამედ მძლავრი <b>კატალიზატორი კრეატიული აზროვნებისთვის</b>. ის გვაძლევს საშუალებას, სწრაფად განვახორციელოთ იდეები, რომლებიც ადრე შესაძლოა რთული ან დროში გაწელილი ჩანდა.</p>
                                 
                                 <div class="idea-spark">
-                                    <p><strong>სწრაფი პროტოტიპირება:</strong> გაქვთ იდეა ახალი პროდუქტის, სერვისის ან თუნდაც თამაშისთვის? AI-ს შეუძლია დაგეხმაროთ ვიზუალური კონცეპტების, ლოგოების, პერსონაჟების ან ინტერფეისის ესკიზების მომენტალურად შექმნაში.</p>
+                                    <p><strong><i class="fas fa-bolt"></i> სწრაფი პროტოტიპირება:</strong> გაქვთ იდეა ახალი პროდუქტის, სერვისის ან თუნდაც თამაშისთვის? AI-ს შეუძლია დაგეხმაროთ ვიზუალური კონცეპტების, ლოგოების, პერსონაჟების ან ინტერფეისის ესკიზების მომენტალურად შექმნაში.</p>
                                 </div>
 
                                 <div class="idea-spark">
-                                    <p><strong>პერსონალური ასისტენტები და ავტომატიზაცია:</strong> რუტინული ამოცანები ხშირად კრეატიულ ენერგიას გვართმევს. AI-ს შეუძლია დაგეხმაროთ შექმნათ მცირე ავტომატიზირებული სკრიპტები ყოველდღიური საქმიანობისთვის.</p>
+                                    <p><strong><i class="fas fa-user-astronaut"></i> პერსონალური ასისტენტები და ავტომატიზაცია:</strong> რუტინული ამოცანები ხშირად კრეატიულ ენერგიას გვართმევს. AI-ს შეუძლია დაგეხმაროთ შექმნათ მცირე ავტომატიზირებული სკრიპტები ყოველდღიური საქმიანობისთვის.</p>
                                 </div>
                                  
                                 <div class="idea-spark">
-                                    <p><strong>"უბრალოდ გასართობად" პროექტები:</strong> ზოგჯერ საუკეთესო იდეები მაშინ იბადება, როდესაც უბრალოდ ვერთობით. სცადეთ შექმნათ AI-გენერირებული პოეზია, უნიკალური ავატარები, ან თუნდაც <b>ინტერაქტიული ანიმირებული ვებ-გვერდი</b>, როგორც ეს პრეზენტაცია.</p>
+                                    <p><strong><i class="fas fa-dice-d20"></i> "უბრალოდ გასართობად" პროექტები:</strong> ზოგჯერ საუკეთესო იდეები მაშინ იბადება, როდესაც უბრალოდ ვერთობით. სცადეთ შექმნათ AI-გენერირებული პოეზია, უნიკალური ავატარები, ან თუნდაც <b>ინტერაქტიული ანიმირებული ვებ-გვერდი</b>, როგორც ეს პრეზენტაცია.</p>
                                 </div>
                                 <p>მთავარია, დაინახოთ AI არა როგორც შემზღუდველი, არამედ როგორც <b>შესაძლებლობების გამაფართოებელი</b>. ითამაშეთ და აღმოაჩინეთ ახალი გზები თქვენი კრეატიულობის გამოსავლენად!</p>
                             `
@@ -917,49 +1003,49 @@
                                 <p>ხელოვნური ინტელექტის სფერო მუდმივად ვითარდება. აქ მოცემულია რამდენიმე მიმართულება, რომელიც დაგეხმარებათ, იყოთ მუდამ საქმის კურსში და იპოვოთ საჭირო მხარდაჭერა:</p>
 
                                 <div class="resource-section">
-                                    <h3>ღია კოდის (Open Source) ინსტრუმენტები</h3>
+                                    <h3><i class="fas fa-code-branch"></i> ღია კოდის (Open Source) ინსტრუმენტები</h3>
                                     <ul>
                                         <li>
                                             <b>Stable Diffusion WebUI-ები:</b>
                                             <span class="resource-note">ადგილობრივად გაშვებადი ინტერფეისები Stable Diffusion-თან სამუშაოდ.</span>
                                             <ul>
-                                                <li><a href="https://github.com/lllyasviel/stable-diffusion-webui-forge" target="_blank">ForgeUI</a> <span class="resource-note">ოპტიმიზირებული და მძლავრი.</span></li>
-                                                <li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank">Automatic1111</a> <span class="resource-note">ფართოდ გავრცელებული და ფუნქციონალური.</span></li>
-                                                <li><a href="https://github.com/lllyasviel/Fooocus" target="_blank">Fooocus</a> <span class="resource-note">სიმარტივეზე ორიენტირებული, Midjourney-ს სტილის.</span></li>
+                                                <li><i class="fas fa-fire"></i> <a href="https://github.com/lllyasviel/stable-diffusion-webui-forge" target="_blank">ForgeUI</a> <span class="resource-note">ოპტიმიზირებული და მძლავრი.</span></li>
+                                                <li><i class="fas fa-desktop"></i> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank">Automatic1111</a> <span class="resource-note">ფართოდ გავრცელებული და ფუნქციონალური.</span></li>
+                                                <li><i class="fas fa-magic"></i> <a href="https://github.com/lllyasviel/Fooocus" target="_blank">Fooocus</a> <span class="resource-note">სიმარტივეზე ორიენტირებული, Midjourney-ს სტილის.</span></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </div>
 
                                 <div class="resource-section">
-                                    <h3>ონლაინ პლატფორმები</h3>
+                                    <h3><i class="fas fa-cloud"></i> ონლაინ პლატფორმები</h3>
                                     <ul>
-                                        <li><a href="https://recraft.ai/" target="_blank">Recraft.ai</a> <span class="resource-note">ბრენდირებული ვიზუალური კონტენტის შესაქმნელად.</span></li>
-                                        <li><a href="https://poe.com/" target="_blank">Poe.com</a> <span class="resource-note">მრავალფეროვანი AI მოდელები (ტექსტი, სურათი) ერთ სივრცეში.</span></li>
+                                        <li><i class="fas fa-vector-square"></i> <a href="https://recraft.ai/" target="_blank">Recraft.ai</a> <span class="resource-note">ბრენდირებული ვიზუალური კონტენტის შესაქმნელად.</span></li>
+                                        <li><i class="fas fa-atom"></i> <a href="https://poe.com/" target="_blank">Poe.com</a> <span class="resource-note">მრავალფეროვანი AI მოდელები (ტექსტი, სურათი) ერთ სივრცეში.</span></li>
                                     </ul>
                                 </div>
 
                                 <div class="resource-section">
-                                    <h3>სწავლა და საზოგადოება</h3>
+                                    <h3><i class="fas fa-users"></i> სწავლა და საზოგადოება</h3>
                                     <ul>
                                         <li>
                                             <b>Reddit:</b> <span class="resource-note">ფორუმები დისკუსიებისა და დახმარებისთვის.</span>
                                             <ul>
-                                                <li><a href="https://www.reddit.com/r/StableDiffusion/" target="_blank">r/StableDiffusion</a></li>
-                                                <li><a href="https://www.reddit.com/r/artificialintelligence/" target="_blank">r/artificialintelligence</a></li>
-                                                <li><a href="https://www.reddit.com/r/singularity/" target="_blank">r/singularity</a></li>
-                                                <li><a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank">r/LocalLLaMA</a> (ლოკალური დიდი ენობრივი მოდელებისთვის)</li>
+                                                <li><i class="fab fa-reddit-alien"></i> <a href="https://www.reddit.com/r/StableDiffusion/" target="_blank">r/StableDiffusion</a></li>
+                                                <li><i class="fab fa-reddit-alien"></i> <a href="https://www.reddit.com/r/artificialintelligence/" target="_blank">r/artificialintelligence</a></li>
+                                                <li><i class="fab fa-reddit-alien"></i> <a href="https://www.reddit.com/r/singularity/" target="_blank">r/singularity</a></li>
+                                                <li><i class="fab fa-reddit-alien"></i> <a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank">r/LocalLLaMA</a> (ლოკალური დიდი ენობრივი მოდელებისთვის)</li>
                                             </ul>
                                         </li>
-                                        <li><b>Discord:</b> <span class="resource-note">ბევრ AI პროექტს და თემს აქვს საკუთარი სერვერი სიახლეებისა და დისკუსიისთვის.</span></li>
+                                        <li><i class="fab fa-discord"></i> <b>Discord:</b> <span class="resource-note">ბევრ AI პროექტს და თემს აქვს საკუთარი სერვერი სიახლეებისა და დისკუსიისთვის.</span></li>
                                         <li>
                                             <b>YouTube:</b> <span class="resource-note">ვიდეო გაკვეთილები, მიმოხილვები და სიახლეები.</span>
                                             <ul>
-                                                <li><a href="https://www.youtube.com/@TwoMinutePapers" target="_blank">Two Minute Papers</a> <span class="resource-note">AI კვლევების მოკლე მიმოხილვები.</span></li>
-                                                <li><a href="https://www.youtube.com/@lexfridman" target="_blank">Lex Fridman Podcast</a> <span class="resource-note">ღრმა დისკუსიები AI მკვლევარებთან (და არა მარტო).</span></li>
-                                                <li><a href="https://www.youtube.com/@bycloudAI" target="_blank">ByCloud AI</a> <span class="resource-note">AI გაკვეთილები, სიახლეები და ხელსაწყოები.</span></li>
-                                                <li><a href="https://www.youtube.com/@matthew_berman" target="_blank">Matthew Berman</a> <span class="resource-note">AI კინემატოგრაფია და გენერაციული ხელოვნება.</span></li>
-                                                <li><a href="https://www.youtube.com/@WesRoth" target="_blank">WesRoth</a> <span class="resource-note">AI გაკვეთილები და კრეატიული AI პროექტები.</span></li>
+                                                <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@TwoMinutePapers" target="_blank">Two Minute Papers</a> <span class="resource-note">AI კვლევების მოკლე მიმოხილვები.</span></li>
+                                                <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@lexfridman" target="_blank">Lex Fridman Podcast</a> <span class="resource-note">ღრმა დისკუსიები AI მკვლევარებთან (და არა მარტო).</span></li>
+                                                <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@bycloudAI" target="_blank">ByCloud AI</a> <span class="resource-note">AI გაკვეთილები, სიახლეები და ხელსაწყოები.</span></li>
+                                                <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@matthew_berman" target="_blank">Matthew Berman</a> <span class="resource-note">AI კინემატოგრაფია და გენერაციული ხელოვნება.</span></li>
+                                                <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@WesRoth" target="_blank">WesRoth</a> <span class="resource-note">AI გაკვეთილები და კრეატიული AI პროექტები.</span></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -977,8 +1063,8 @@
                                     <p class="anim-item">მზად ვარ, ვუპასუხო თქვენს შეკითხვებს.</p>
                                     <div class="social-links anim-item">
                                         <p>დამიკავშირდით:</p>
-                                        <a href="https://www.linkedin.com/in/john-kvezereli/" target="_blank" class="social-link">LinkedIn</a>
-                                        <a href="YOUR_FACEBOOK_URL_HERE" target="_blank" class="social-link">Facebook</a>
+                                        <a href="https://www.linkedin.com/in/john-kvezereli/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                        <a href="YOUR_FACEBOOK_URL_HERE" target="_blank" class="social-link"><i class="fab fa-facebook"></i> Facebook</a>
                                     </div>
                                 </div>
                             `
