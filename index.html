@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="ka"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html><html lang="ka"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com https://static.wixstatic.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI კრეატივში: ახალი რეალობა - ჯონ კვეზერელი</title>
@@ -44,6 +44,11 @@
         /* Remove previous animated gradient if it conflicts, or adapt later */
         /* @keyframes animatedGradient { ... } */
 
+        @keyframes animatePartnershipDivider {
+            from { width: 0%; opacity: 0; }
+            to { width: 50%; opacity: 0.7; }
+        }
+
         *, *::before, *::after { box-sizing: border-box; }
 
         body, html {
@@ -81,81 +86,93 @@
             box-shadow: var(--shadow-strong);
             display: flex;
             flex-direction: column;
-            padding: 0;
+            /* padding: 0; */ /* Removed to allow individual padding for header/content */
             overflow: hidden;
             position: relative; 
             border: 1px solid var(--color-border-subtle); 
+        }
+        .is-qa-slide.slide-container, .is-first-slide.slide-container {
+            background: radial-gradient(ellipse at center, var(--color-primary-light) 0%, var(--color-primary) 70%);
         }
         
         .slide-header { /* For non-first slides */
             background: transparent; /* Or var(--color-primary-light) for subtle difference */
             color: var(--color-text-dark);
-            padding: 25px 40px; /* Adjusted */
+            padding: 20px 35px; /* Adjusted padding */
             text-align: left; 
             border-bottom: 2px solid var(--color-secondary); /* Purple accent line */
+            flex-shrink: 0; /* Prevent header from shrinking */
         }
         
         .slide-header .slide-title, .slide-title-centered {
             font-family: var(--primary-font);
-            font-size: 2.1em; 
+            font-size: 2.0em; /* Slightly reduced */
             font-weight: 600; 
-            margin: 0 0 5px 0; 
+            margin: 0 0 3px 0; /* Reduced bottom margin */
             color: var(--color-text-dark); /* White title */
             letter-spacing: -0.2px; 
+            /* text-shadow: 0 1px 2px rgba(0,0,0,0.1); */ /* Subtle pop for titles */
+        }
+        .slide-header:not(.is-first-slide .slide-header) .slide-title { /* More specific selector for non-first-slide titles */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
          .slide-title-centered { 
             color: var(--color-secondary); /* Purple for emphasis on Q&A title etc. */
-            font-size: 2.4em; 
-            margin-top: 35px; 
-            margin-bottom: 25px; 
+            font-size: 2.2em; /* Slightly reduced */
+            margin-top: 25px; /* Reduced top margin */
+            margin-bottom: 15px; /* Reduced bottom margin */
             text-align: center;
         }
 
         .slide-header .slide-subtitle {
             font-family: var(--secondary-font);
-            font-size: 1.2em; 
+            font-size: 1.15em; /* Slightly reduced */
             font-weight: 300; 
             opacity: 0.8; 
-            margin: 0;
-            line-height: 1.45; 
+            margin: 0 0 10px 0; /* Added bottom margin for spacing if title is present, reduced from potential implied spacing */
+            line-height: 1.4; /* Adjusted */
             color: var(--color-text-medium);
         }
         
         .slide-presenter { /* For non-first slides */
             font-family: var(--secondary-font);
-            font-size: 1.05em; 
+            font-size: 1.0em; /* Slightly reduced */
             font-weight: 400; 
             color: var(--color-text-light); /* Dimmer grey */
             text-align: center;
-            padding: 12px 0; 
+            padding: 10px 0; /* Reduced padding */
             background-color: var(--color-primary-light); /* Subtle dark background */
             border-bottom: 1px solid var(--color-border-subtle);
+            flex-shrink: 0; /* Prevent presenter section from shrinking */
         }
 
         .slide-content-wrapper {
             flex-grow: 1;
             overflow-y: auto;
-            padding: 30px 40px; 
-            line-height: 1.7; 
-            font-size: 1.05em; 
+            padding: 25px 35px; /* Adjusted padding */
+            line-height: 1.7; /* Increased for readability */
+            font-size: 1.0em; /* Adjusted */
             color: var(--color-text-medium); /* Default content text */
-            border-top: 1px solid var(--color-border-subtle); 
+            border-top: 1px solid var(--color-border-subtle);
+            /* Subtle diagonal gradient for texture - REMOVED */
+            /* background-image: linear-gradient(135deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.01) 50%, rgba(255,255,255,0.01) 75%, transparent 75%, transparent); */
+            /* background-size: 20px 20px; */ /* Adjust size of the pattern - REMOVED */
         }
-        .is-first-slide .slide-content-wrapper,
-        .is-qa-slide .slide-content-wrapper { 
+        .is-first-slide .slide-content-wrapper { 
             border-top: none; 
+            padding: 0; /* No padding for first slide content as it's hidden */
+            /* background-image: none; */ /* Remove gradient from first slide content wrapper - NO LONGER NEEDED */
         }
-
-        /* Styles for Q&A slide content wrapper to center content */
         .is-qa-slide .slide-content-wrapper {
+            border-top: none;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%; /* Ensure it takes full available height */
-            text-align: center; /* Ensure text within is centered if not already */
-            padding: 20px 40px; /* Keep horizontal padding, vertical handled by flex */
-            overflow-y: hidden; /* Prevent scrollbar if content fits perfectly */
+            /* height: 100%; */ /* Let flex-grow handle height */
+            text-align: center; 
+            padding: 20px 35px; /* Consistent horizontal padding */
+            overflow-y: auto; /* Allow scroll if content overflows */
         }
 
         .slide-content-wrapper::-webkit-scrollbar { width: 8px; } 
@@ -164,25 +181,37 @@
         .slide-content-wrapper::-webkit-scrollbar-thumb:hover { background: var(--color-secondary); } 
 
 
-        .slide-content-wrapper p { margin-bottom: 1.5em; }
+        .slide-content-wrapper p { margin-bottom: 1em; } /* Reduced from 1.2em */
         .slide-content-wrapper p:last-child { margin-bottom: 0; }
-        .slide-content-wrapper ul { list-style-type: none; padding-left: 10px; }
-        .slide-content-wrapper li { margin-bottom: 1.1em; padding-left: 2em; position: relative; }
+        .slide-content-wrapper ul { list-style-type: none; padding-left: 8px; } /* Reduced */
+        .slide-content-wrapper li { margin-bottom: 0.9em; padding-left: 1.8em; position: relative; } /* Reduced */
+        .slide-content-wrapper li:hover {
+            color: var(--color-text-dark); /* Enhance hover for the whole list item */
+        }
         .slide-content-wrapper li::before {
             content: "\276F"; /* Heavy single turned comma quotation mark ornament */
             color: var(--color-secondary); position: absolute;
-            left: 0.5em;  font-size: 1.2em; font-weight: normal; 
+            left: 0.5em;  font-size: 1.1em; font-weight: normal; /* Adjusted */
             transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
         }
         .slide-content-wrapper li:hover::before { color: var(--color-accent); transform: translateX(2px); }
         .slide-content-wrapper strong, .slide-content-wrapper b { font-weight: 600; color: var(--color-text-dark); /* White for strong */ }
-        .slide-content-wrapper i, .slide-content-wrapper em { color: var(--color-accent); font-style: italic; font-weight: 400; }
+        .slide-content-wrapper i, .slide-content-wrapper em { 
+            color: var(--color-accent); 
+            font-style: italic; 
+            font-weight: 500; /* Increased font-weight */
+            text-shadow: 0 0 5px rgba(var(--color-accent-rgb, 160, 32, 240), 0.2); /* Faint text shadow */
+        }
         .slide-content-wrapper a {
             color: var(--color-link);
             text-decoration: none; 
             font-weight: 500;
             border-bottom: 1px dashed var(--color-link); /* Dashed underline for links */
             transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+        }
+        .slide-content-wrapper a:visited {
+            color: var(--color-link); /* Keep visited links same as normal for this design */
+            border-bottom-color: var(--color-link);
         }
         .slide-content-wrapper a:hover { 
             color: var(--color-link-hover); 
@@ -192,88 +221,122 @@
         
         /* Reverting .case-study-section to plain text */
         .case-study-section { 
-            margin-bottom: 2em; 
-            padding-bottom: 1em; 
-            /* Removed background, border-radius, padding, box-shadow, border, transition, hover */
+            margin-bottom: 2.5em; /* Increased for more separation */
+            /* padding-bottom: 1em; */ /* Removed, margin-bottom handles it */
+            transition: box-shadow var(--transition-speed) ease; /* Removed border-left-color transition */
+            /* Removed background, border-radius, box-shadow, border, transition, hover */
         }
-        .case-study-section:last-child { margin-bottom: 0; padding-bottom: 0; }
+        .case-study-section:hover {
+            box-shadow: 0 0 15px rgba(var(--color-accent-rgb, 160, 32, 240), 0.1); /* Subtle glow with accent color */
+        }
+        .case-study-section:last-child { margin-bottom: 0; /* padding-bottom: 0; */ }
 
         .case-study-section .label {
             font-family: var(--primary-font); 
-            font-weight: 600; 
+            font-weight: 700; /* Slightly bolder */ 
             color: var(--color-secondary); /* Purple label */
-            display: block; 
-            margin-bottom: 0.7em; 
-            font-size: 1.3em; 
+            margin-bottom: 0.5em; /* Reduced from 0.8em */
+            font-size: 1.05em; /* Adjusted for balance */
+            /* display: block; */ /* Removed redundant display property */
             text-transform: uppercase; 
             letter-spacing: 0.5px; 
             border-bottom: 1px solid var(--color-accent); /* Brighter purple underline */
             padding-bottom: 0.3em;
+            /* background-color: var(--color-primary-light); */ /* REMOVED for minimalistic look */
+            /* padding-left: 8px;   */ /* REMOVED for minimalistic look */
+            /* padding-right: 8px;  */ /* REMOVED for minimalistic look */
+            /* border-radius: var(--border-radius-sm); */ /* REMOVED for minimalistic look */
             display: inline-block; 
         }
         .case-study-section .description { 
-            color: var(--color-text-medium); 
+            color: var(--color-text-dark); /* Brighter text for description */
             padding-left: 0; 
-            font-size: 1em; 
-            line-height: 1.65; 
+            font-size: 1em; /* Increased for readability */
+            line-height: 1.7; /* Increased for readability */
+        }
+        .case-study-section .description p {
+            margin-bottom: 0.8em; /* Reduced margin for paragraphs within case study */
+        }
+        .case-study-section .description p:last-child {
+            margin-bottom: 0;
+        }
+        .case-study-section .description em {
+            color: var(--color-accent); /* Brighter purple for emphasis on impact statements */
+            font-weight: 500; /* Slightly bolder for emphasis */
+            /* Inherits enhanced em styling now */
         }
 
         /* Styles for .tool-highlight, .prompt-example, .idea-spark will be updated next */
         .tool-highlight {
             background-color: var(--color-primary-light); 
-            padding: 20px 30px;  
+            padding: 20px 28px;  /* Adjusted padding */
             border-radius: var(--border-radius-md);
-            margin-bottom: 2em; 
-            border-left: 5px solid var(--color-secondary); 
+            margin-bottom: 1.8em; /* Adjusted margin */
+            /* border-left: 5px solid var(--color-secondary); */ /* REMOVED for minimalistic look */
             box-shadow: var(--shadow-soft);
+            transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        .tool-highlight:hover {
+            background-color: var(--color-slide-background); /* Lighten on hover by matching slide bg */
+            transform: translateY(-3px);
         }
         .tool-highlight strong { 
-            color: var(--color-secondary); /* Purple strong text */
+            color: var(--color-secondary); /* Main Purple */
             font-family: var(--primary-font);
-            font-size: 1.25em; font-weight: 600; display: block; margin-bottom: 0.6em; 
+            font-size: 1.2em; font-weight: 600; display: block; margin-bottom: 0.5em; /* Adjusted */
         }
+        /* Body text inside tool-highlight will inherit from .slide-content-wrapper (var(--color-text-medium)) */
         
         .prompt-example {
-            background-color: #1C1C24; /* Darker than slide bg for contrast */
+            background-color: #121217; /* Even darker than primary-light, for code blocks */
             border: 1px solid var(--color-border-subtle);  
-            padding: 18px 25px; 
+            border-top: 2px solid var(--color-accent); /* Subtle accent top border */
+            padding: 18px 25px; /* Adjusted padding */ 
             border-radius: var(--border-radius-sm); 
-            margin: 1.8em 0; 
+            margin: 1.8em 0; /* Adjusted margin */ 
             font-family: 'Fira Code', 'Menlo', 'Monaco', Courier, monospace; 
-            font-size: 1em; 
-            color: #D0D0D0; /* Light grey for code */
-            line-height: 1.7; 
-            box-shadow: var(--shadow-soft); 
+            font-size: 0.95em; /* Adjusted */
+            color: #C5C8C6; /* Specific light grey for code text */
+            line-height: 1.7; /* Adjusted */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.1); /* Deepened inset shadow + soft outer */
             overflow-x: auto;
         }
         .prompt-example .model-name {
-            font-weight: 500; color: var(--color-accent); display: block;
-            margin-bottom: 10px; font-family: var(--primary-font); 
-            font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.7px; 
+            font-weight: 500; color: var(--color-accent); /* Brighter Purple */
+            display: block;
+            margin-bottom: 10px; /* Adjusted margin */
+            font-family: var(--primary-font); 
+            font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.8px; /* Adjusted */
         }
         
         .idea-spark {
             background-color: var(--color-primary-light);
-            border-left: 5px solid var(--color-accent); 
-            padding: 20px 30px;  
+            /* border-left: 5px dashed var(--color-accent); */ /* REMOVED for minimalistic look */ 
+            padding: 20px 28px;  /* Adjusted padding */
             border-radius: var(--border-radius-md); 
-            margin: 1.8em 0; 
+            margin: 1.8em 0; /* Adjusted margin */
             box-shadow: var(--shadow-soft);
+            transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        .idea-spark:hover {
+            background-color: var(--color-slide-background); /* Lighten on hover */
+            transform: translateY(-3px);
         }
         .idea-spark strong { 
-            color: var(--color-accent); 
+            color: var(--color-accent); /* Brighter Purple */ 
             font-family: var(--primary-font); 
             font-weight: 600; 
-            font-size: 1.15em; 
+            font-size: 1.15em; /* Adjusted size */
             display: block; 
-            margin-bottom: 0.4em;
+            margin-bottom: 0.4em; /* Adjusted */
         }
+        /* Body text inside idea-spark will inherit */
 
-        .resource-section { margin-top: 2.2em; margin-bottom: 2.2em; }
+        .resource-section { margin-top: 2em; margin-bottom: 2em; } /* Adjusted */
         .resource-section h3 {
             font-family: var(--primary-font); color: var(--color-secondary);
-            font-size: 1.4em; font-weight: 600; margin-bottom: 1em; 
-            border-bottom: 2px solid var(--color-secondary); padding-bottom: 0.4em; display: inline-block;
+            font-size: 1.3em; font-weight: 600; margin-bottom: 0.8em; /* Adjusted */
+            border-bottom: 2px solid var(--color-secondary); padding-bottom: 0.3em; display: inline-block; /* Adjusted */
         }
         .resource-section ul { padding-left: 15px; }
         .resource-section li { margin-bottom: 0.8em !important; }
@@ -282,18 +345,19 @@
 
         .slide-centered-text { 
             text-align: center; 
-            font-size: 1.3em; 
-            margin-top: 15px; 
+            font-size: 1.2em; /* Adjusted */
+            margin-top: 10px; /* Reduced */
             color: var(--color-text-medium); 
+            width: 100%; /* Ensure it takes full width for centering */
         }
 
         .slide-title-centered { 
             font-family: var(--primary-font);
             color: var(--color-secondary); /* Purple */
-            font-size: 2.2em; 
+            font-size: 2.0em; /* Adjusted to match normal slide title */
             font-weight: 600;
-            margin-top: max(4vh, 30px); 
-            margin-bottom: 20px; 
+            margin-top: max(3vh, 20px); /* Adjusted */
+            margin-bottom: 10px; /* Reduced */
             text-align: center;
             letter-spacing: -0.3px;
         }
@@ -301,22 +365,24 @@
         .slide-centered-text h2 { 
             font-family: var(--primary-font); 
             color: var(--color-text-dark); /* White */
-            font-size: 2.8em;  
+            font-size: 2.8em;  /* Increased */
             font-weight: 600; 
-            margin-bottom: 15px; 
-            line-height: 1.2;
+            margin-bottom: 15px; /* Increased margin */
+            line-height: 1.15; /* Adjusted */
+            text-shadow: 0 0 10px rgba(127,0,255, 0.3); /* Subtle accent glow */
         }
 
         .slide-centered-text > p:not(.social-links p) { 
-            font-size: 1.1em; 
+            font-size: 1.1em; /* Increased */
             color: var(--color-text-medium);
-            line-height: 1.55;
-            margin-bottom: 25px; 
+            line-height: 1.5; /* Adjusted */
+            margin-bottom: 20px; /* Adjusted */
+            opacity: 0.9;
         }
         
         .social-links {
-            margin-top: 25px;
-            padding-top: 20px;
+            margin-top: 20px; /* Reduced */
+            padding-top: 15px; /* Reduced */
             border-top: 1px solid var(--color-border-subtle);
             display: inline-block; 
             width: auto; 
@@ -327,13 +393,13 @@
             font-family: var(--secondary-font);
             font-weight: 400; 
             color: var(--color-text-light); 
-            font-size: 1em;  
-            margin-bottom: 15px; 
+            font-size: 0.95em;  /* Adjusted */
+            margin-bottom: 12px; /* Reduced */
         }
 
         .social-link {
             font-family: var(--primary-font);
-            color: var(--color-text-dark);
+            color: #FFFFFF !important; /* Forcing white text */
             background-color: var(--color-secondary);
             border: 1px solid var(--color-secondary);
             text-decoration: none; 
@@ -342,12 +408,12 @@
             margin: 5px 8px; 
             border-radius: var(--border-radius-sm);
             transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-            font-size: 1em; 
+            font-size: 0.95em; /* Adjusted */
             display: inline-block; 
         }
 
         .social-link:hover {
-            color: var(--color-text-dark);
+            color: #FFFFFF !important; /* Forcing white text on hover */
             background-color: var(--color-accent);
             border-color: var(--color-accent);
             transform: translateY(-2px) scale(1.02); 
@@ -410,124 +476,165 @@
 
         /* --- First Slide Specific Styles --- */
         .is-first-slide .slide-header {
-            /* flex-grow: 1; Removed */
-            height: 100%; /* Make header take full slide height */
+            /* height: 100%; */ /* Removed to allow natural height based on content + padding */
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; 
-            padding: 30px 30px; /* Simplified padding, flex handles centering */ 
-            background: var(--color-primary); /* Solid dark for GAIA style */
+            padding: 40px 30px 20px 30px; /* More top padding, less bottom */
+            background: transparent; /* Changed from var(--color-primary) to allow container gradient to show */
             border-bottom: none; 
-            border-top-left-radius: var(--border-radius-lg); 
-            border-top-right-radius: var(--border-radius-lg);
+            /* border-top-left-radius: var(--border-radius-lg);  */ /* Handled by slide-container */
+            /* border-top-right-radius: var(--border-radius-lg); */ /* Handled by slide-container */
+            flex-grow: 1; /* Allow header to take up space, but content wrapper is not displayed */
+        }
+
+        .is-first-slide .slide-header .partnership-credit {
+            /* order: -1; /* Ensures it's at the top if HTML isn't reordered, but HTML is reordered now */
+            margin-bottom: 15px; /* Was 20px, reduced as divider adds space */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Was 8px */ 
+        }
+        .is-first-slide .slide-header .partnership-text-above {
+            font-size: 1em; /* Was 0.8em */ 
+            font-weight: 400; /* Was 300 */
+            opacity: 0.9; /* Was 0.7 */
+        }
+        .is-first-slide .slide-header .gaia-logo {
+            max-height: 65px; /* Was 50px */ 
+            width: auto;
+            opacity: 0.95; /* Was 0.9 */
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+            display: block; 
+        }
+        .is-first-slide .slide-header .gaia-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .is-first-slide .slide-header .partnership-text-below {
+            font-size: 1.05em; /* Was 0.9em */ 
+            font-weight: 500; 
+            color: var(--color-text-medium); /* Keeping it consistent but larger */
+        }
+        
+        .is-first-slide .slide-header .partnership-divider {
+            width: 50%; /* Was 60% */
+            height: 1px;
+            background-color: var(--color-border-subtle);
+            margin: 0 auto 25px auto; /* Was 20px auto, adjusted for spacing */
+            opacity: 0.7;
+            animation: animatePartnershipDivider 0.8s var(--animation-easing) 0.5s forwards; /* Added animation */
         }
 
         .is-first-slide .slide-header .slide-title { 
-            font-size: 3.5em; 
+            font-size: 3.8em; /* Was 3.2em */
             font-weight: 700; 
             color: var(--color-text-dark); /* White */ 
-            line-height: 1.15; 
-            margin-bottom: 20px; 
-            text-shadow: 1px 1px 3px rgba(var(--color-secondary-rgb, 127,0,255), 0.3); /* Subtle purple glow if var exists */
+            line-height: 1.15; /* Was 1.1 */
+            margin-bottom: 20px; /* Was 12px */
+            text-shadow: 0 0 12px rgba(var(--color-secondary-rgb, 127,0,255), 0.35); /* Enhanced shadow */
         }
         .animated-title-word { display: inline-block; position: relative; white-space: nowrap; }
 
         .is-first-slide .slide-header .slide-subtitle { 
-            font-size: 1.6em; 
+            font-size: 1.7em; /* Was 1.5em */
             font-weight: 300; 
-            color: var(--color-text-medium); /* Light grey */
-            line-height: 1.5; 
-            max-width: 75%; 
-            margin: 0 auto 15px auto; 
+            color: var(--color-text-light); /* Was --color-text-medium, making it slightly dimmer */
+            line-height: 1.5; /* Was 1.45 */
+            max-width: 80%; /* Was 75% */
+            margin: 0 auto 30px auto; /* Was 0 auto 18px auto */
         }
 
         .is-first-slide .slide-presenter {
-            font-size: 1.15em;  
+            font-size: 1.1em;  /* Adjusted */
             font-weight: 500; 
             color: var(--color-text-dark); /* White text */
             background-color: var(--color-secondary); /* Purple background */ 
-            padding: 15px 0; 
+            padding: 10px 0; /* Was 12px 0 */
             border-top: none; border-bottom: none; 
-            border-bottom-left-radius: var(--border-radius-lg); 
-            border-bottom-right-radius: var(--border-radius-lg);
+            /* border-bottom-left-radius: var(--border-radius-lg); */ /* Handled by slide-container */
+            /* border-bottom-right-radius: var(--border-radius-lg); */ /* Handled by slide-container */
+            width: 100%; /* Ensure it spans full width */
+            flex-shrink: 0; /* Prevent shrinking */
         }
 
         .is-first-slide .slide-content-wrapper { display: none; }
 
         /* Media Queries for Responsiveness - will need significant review for GAIA theme */
         @media (max-width: 1490px) { 
-            .slide-container { max-width: 1280px; max-height: 680px; } /* Adjusted */
+            .slide-container { max-width: 1280px; max-height: 680px; } 
             .navigation-buttons { max-width: 1280px; }
-            .is-first-slide .slide-header .slide-title { font-size: 4em; } 
-            .is-first-slide .slide-header .slide-subtitle { font-size: 1.8em; } 
-            .slide-header .slide-title, .slide-title-centered { font-size: 2.3em; } 
-            .slide-header .slide-subtitle { font-size: 1.3em; } 
-            .slide-content-wrapper { font-size: 1.08em; padding: 32px 42px; line-height: 1.72; } 
-            .slide-content-wrapper p { margin-bottom: 1.55em; }
-            .nav-button { padding: 14px 32px; font-size: 1.02em; } 
-            .slide-counter { font-size: 1.02em; padding: 9px 18px; }
+            .is-first-slide .slide-header .slide-title { font-size: 3.0em; } /* Adjusted */
+            .is-first-slide .slide-header .slide-subtitle { font-size: 1.4em; } /* Adjusted */
+            .slide-header .slide-title, .slide-title-centered { font-size: 2.1em; } /* Adjusted */
+            .slide-header .slide-subtitle { font-size: 1.2em; } /* Adjusted */
+            .slide-content-wrapper { font-size: 1.02em; padding: 28px 38px; line-height: 1.68; } /* Adjusted */
+            .slide-content-wrapper p { margin-bottom: 1.25em; } /* Adjusted */
+            .nav-button { padding: 12px 28px; font-size: 0.98em; } /* Adjusted */
+            .slide-counter { font-size: 0.98em; padding: 8px 16px; } /* Adjusted */
         }
 
         @media (max-width: 1350px) { 
-            .slide-container { max-width: 1100px; max-height: 660px; } /* Adjusted */
+            .slide-container { max-width: 1100px; max-height: 660px; } 
             .navigation-buttons { max-width: 1100px; }
-            .is-first-slide .slide-header .slide-title { font-size: 3.7em; } 
-            .is-first-slide .slide-header .slide-subtitle { font-size: 1.7em; }
-            .slide-header .slide-title, .slide-title-centered { font-size: 2.2em; }
-            .slide-header .slide-subtitle { font-size: 1.25em; }
-            .slide-content-wrapper { font-size: 1.05em; padding: 30px 40px; line-height: 1.7; }
+            .is-first-slide .slide-header .slide-title { font-size: 2.8em; } /* Adjusted */
+            .is-first-slide .slide-header .slide-subtitle { font-size: 1.3em; } /* Adjusted */
+            .slide-header .slide-title, .slide-title-centered { font-size: 2.0em; } /* Adjusted */
+            .slide-header .slide-subtitle { font-size: 1.15em; } /* Adjusted */
+            .slide-content-wrapper { font-size: 1.0em; padding: 25px 35px; line-height: 1.65; } /* Adjusted */
         }
 
         @media (max-width: 1200px) { 
-            .slide-container { max-width: 960px; max-height: 630px; } /* Adjusted */
+            .slide-container { max-width: 960px; max-height: 630px; } 
             .navigation-buttons { max-width: 960px; }
-            .is-first-slide .slide-header .slide-title { font-size: 3.4em; }
-            .is-first-slide .slide-header .slide-subtitle { font-size: 1.55em; }
-            .slide-header .slide-title, .slide-title-centered { font-size: 2.1em; } 
-            .slide-header .slide-subtitle { font-size: 1.2em; } 
-            .slide-content-wrapper { font-size: 1em; padding: 28px 38px; line-height: 1.68; } 
-            .slide-content-wrapper p { margin-bottom: 1.45em; }
-            .nav-button { padding: 13px 30px; font-size: 0.95em; } 
-            .slide-counter { font-size: 0.95em; padding: 8px 16px; } 
+            .is-first-slide .slide-header .slide-title { font-size: 2.6em; } /* Adjusted */
+            .is-first-slide .slide-header .slide-subtitle { font-size: 1.2em; } /* Adjusted */
+            .slide-header .slide-title, .slide-title-centered { font-size: 1.9em; } /* Adjusted */
+            .slide-header .slide-subtitle { font-size: 1.1em; } /* Adjusted */
+            .slide-content-wrapper { font-size: 0.95em; padding: 22px 32px; line-height: 1.62; } /* Adjusted */
+            .slide-content-wrapper p { margin-bottom: 1.2em; } /* Adjusted */
+            .nav-button { padding: 11px 25px; font-size: 0.9em; } /* Adjusted */
+            .slide-counter { font-size: 0.9em; padding: 7px 14px; } /* Adjusted */
         }
 
         @media (max-width: 768px) { 
             #app { padding: 15px; }
             .slide-container { max-width: 95vw; max-height: 90vh; }
-            .navigation-buttons { max-width: 95vw; flex-wrap: nowrap; margin-top: 20px; padding: 0 10px; }
-            .slide-header { padding: 22px 22px; } 
-            .slide-header .slide-title, .slide-title-centered { font-size: 1.8em; } 
-            .slide-header .slide-subtitle { font-size: 1.1em; } 
-            .slide-content-wrapper { padding: 22px 22px; font-size: 0.98em; line-height: 1.65; } 
-            .slide-content-wrapper p { margin-bottom: 1.35em; }
-            .nav-button { padding: 12px 18px; font-size: 0.85em; letter-spacing: 0.5px;} 
-            .slide-counter { font-size: 0.85em; padding: 8px 12px; margin: 0 8px;} 
-            .is-first-slide .slide-header .slide-title { font-size: 2.5em; margin-bottom: 20px; } 
-            .is-first-slide .slide-header .slide-subtitle { font-size: 1.2em; max-width: 90%; margin-bottom: 15px;} 
-            .is-first-slide .slide-header { padding: 45px 20px; } 
+            .navigation-buttons { max-width: 95vw; flex-wrap: nowrap; margin-top: 15px; padding: 0 8px; } /* Reduced margin */
+            .slide-header { padding: 18px 20px; } /* Adjusted */
+            .slide-header .slide-title, .slide-title-centered { font-size: 1.6em; } /* Adjusted */
+            .slide-header .slide-subtitle { font-size: 1.0em; } /* Adjusted */
+            .slide-content-wrapper { padding: 18px 20px; font-size: 0.92em; line-height: 1.6; } /* Adjusted */
+            .slide-content-wrapper p { margin-bottom: 1.15em; } /* Adjusted */
+            .nav-button { padding: 10px 15px; font-size: 0.8em; letter-spacing: 0.3px;} /* Adjusted */
+            .slide-counter { font-size: 0.8em; padding: 7px 10px; margin: 0 6px;} /* Adjusted */
+            .is-first-slide .slide-header .slide-title { font-size: 2.2em; margin-bottom: 15px; } /* Adjusted */
+            .is-first-slide .slide-header .slide-subtitle { font-size: 1.1em; max-width: 85%; margin-bottom: 10px;} /* Adjusted */
+            .is-first-slide .slide-header { padding: 35px 18px; } /* Adjusted */
         }
 
         @media (max-width: 600px) { 
             #app { padding: 10px; } 
             .slide-container { 
                 border-radius: var(--border-radius-md); 
-                max-height: none; 
-                height: calc(100% - 60px); /* Adjusted for slightly larger nav buttons */
+                /* max-height: none; */ /* Allow height to be defined by content or parent */
+                height: calc(100% - 55px); /* Adjusted for nav buttons */
             } 
-            .navigation-buttons { margin-top: 12px; padding: 0 8px; } 
-            .slide-header { padding: 18px 18px; } 
-            .slide-header .slide-title, .slide-title-centered { font-size: 1.5em; margin-bottom: 10px; } 
-            .slide-header .slide-subtitle { font-size: 1em; } 
-            .slide-content-wrapper { padding: 18px 18px; font-size: 0.92em; line-height: 1.62; } 
-            .slide-content-wrapper p { margin-bottom: 1.25em; }
-            .nav-button { padding: 10px 12px; font-size: 0.8em; } 
-            .slide-counter { font-size: 0.8em; padding: 6px 8px; margin: 0 6px;} 
-            .is-first-slide .slide-header .slide-title { font-size: 2em; margin-bottom: 15px;} 
-            .is-first-slide .slide-header .slide-subtitle { font-size: 1.1em; max-width: 95%; margin-bottom: 12px;}
-            .is-first-slide .slide-presenter { font-size: 1em; padding: 12px 0;} 
-            .is-first-slide .slide-header { padding: 35px 15px; } 
-            .slide-title-centered { font-size: 1.6em; margin-top: 35px; margin-bottom: 18px; }
-            .slide-centered-text h2 { font-size: 1.7em; margin-bottom: 8px; }
-            .social-links { margin-top: 15px; font-size: 1em; }
+            .navigation-buttons { margin-top: 10px; padding: 0 5px; } /* Reduced margin */
+            .slide-header { padding: 15px 15px; } /* Adjusted */
+            .slide-header .slide-title, .slide-title-centered { font-size: 1.4em; margin-bottom: 8px; } /* Adjusted */
+            .slide-header .slide-subtitle { font-size: 0.9em; } /* Adjusted */
+            .slide-content-wrapper { padding: 15px 15px; font-size: 0.88em; line-height: 1.58; } /* Adjusted */
+            .slide-content-wrapper p { margin-bottom: 1.1em; } /* Adjusted */
+            .nav-button { padding: 9px 10px; font-size: 0.75em; } /* Adjusted */
+            .slide-counter { font-size: 0.75em; padding: 5px 7px; margin: 0 5px;} /* Adjusted */
+            .is-first-slide .slide-header .slide-title { font-size: 1.8em; margin-bottom: 12px;} /* Adjusted */
+            .is-first-slide .slide-header .slide-subtitle { font-size: 1.0em; max-width: 90%; margin-bottom: 10px;} /* Adjusted */
+            .is-first-slide .slide-presenter { font-size: 0.95em; padding: 10px 0;} /* Adjusted */
+            .is-first-slide .slide-header { padding: 25px 12px; } /* Adjusted */
+            .slide-title-centered { font-size: 1.5em; margin-top: 25px; margin-bottom: 12px; } /* Adjusted */
+            .slide-centered-text h2 { font-size: 1.6em; margin-bottom: 6px; } /* Adjusted */
+            .social-links { margin-top: 12px; font-size: 0.95em; } /* Adjusted */
         }
     </style>
 </head>
@@ -535,7 +642,19 @@
     <div id="app">
         <transition name="slide" mode="out-in">
             <div class="slide-container" :key="currentSlideIndex" :class="{ 'is-first-slide': currentSlide.isFirstSlide, 'is-qa-slide': currentSlide.isQASlide }">
-                <div class="slide-header" v-if="(!currentSlide.isCenteredText && currentSlide.title && !currentSlide.hideHeader && !currentSlide.isFirstSlide) || (currentSlide.isFirstSlide)">
+                <div class="slide-header" v-if="(!currentSlide.isCenteredText && currentSlide.title && !currentSlide.hideHeader && !currentSlide.isFirstSlide) || (currentSlide.isFirstSlide && (currentSlide.staticTitlePart1 || currentSlide.subtitle || (currentSlide.animatedTitleWords && currentSlide.animatedTitleWords.length > 0)))">
+                    <!-- MOVED GAIA PARTNERSHIP INFO TO TOP -->
+                    <div v-if="currentSlide.isFirstSlide && currentSlide.partnershipInfo" class="partnership-credit anim-item">
+                        <p v-if="currentSlide.partnershipInfo.aboveLogoText" class="partnership-text-above">{{ currentSlide.partnershipInfo.aboveLogoText }}</p>
+                        <a :href="currentSlide.partnershipInfo.gaiaWebsiteUrl" target="_blank" rel="noopener noreferrer">
+                            <img :src="currentSlide.partnershipInfo.logoUrl" alt="GAIA Logo" class="gaia-logo">
+                        </a>
+                        <p v-if="currentSlide.partnershipInfo.belowLogoText" class="partnership-text-below">{{ currentSlide.partnershipInfo.belowLogoText }}</p>
+                    </div>
+
+                    <!-- ADDED DIVIDER -->
+                    <div v-if="currentSlide.isFirstSlide && currentSlide.partnershipInfo" class="partnership-divider anim-item"></div>
+
                     <h1 class="slide-title anim-item" v-if="currentSlide.isFirstSlide">
                         {{ currentSlide.staticTitlePart1 }}<span class="animated-title-word">{{ currentSlide.animatedTitleWords[0] }}</span>{{ currentSlide.staticTitlePart2 }}
                     </h1>
@@ -543,6 +662,8 @@
                         {{ currentSlide.title }}
                     </h1>
                     <h2 v-if="currentSlide.subtitle" class="slide-subtitle anim-item">{{ currentSlide.subtitle }}</h2>
+
+                    <!-- ORIGINAL GAIA PARTNERSHIP INFO LOCATION (REMOVED FROM HERE) -->
                 </div>
                  <p v-if="currentSlide.presenter" class="slide-presenter anim-item" :class="{'presenter-anim': currentSlide.isFirstSlide}">{{ currentSlide.presenter }}</p>
 
@@ -579,7 +700,13 @@
                             subtitle: "კონტენტის გენერაცია და ინოვაციური სამუშაო პროცესები",
                             presenter: "ვორქშოპს უძღვება: ჯონ კვეზერელი",
                             content: "",
-                            isQASlide: false // Explicitly set for clarity, though default undefined would be falsy
+                            isQASlide: false, // Explicitly set for clarity, though default undefined would be falsy
+                            partnershipInfo: {
+                                aboveLogoText: "ვორქშოპის პარტნიორი:",
+                                logoUrl: "https://static.wixstatic.com/media/b9bb6c_5329765d46314f008ccdfe5c5cd26724~mv2.png/v1/fill/w_370,h_124,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%E1%83%9A%E1%83%9D%E1%83%92%E1%83%9D-%E1%83%97%E1%83%94%E1%83%97%E1%83%A0%E1%83%98_edited_edited.png",
+                                belowLogoText: "საქართველოს ხელოვნური ინტელექტის ასოციაცია (GAIA)",
+                                gaiaWebsiteUrl: "https://www.aiassociation.ge/"
+                            }
                         },
                         { // 2 - About Me (Shortened)
                             title: "გამარჯობა! მე ვარ ჯონი",
@@ -587,6 +714,7 @@
                             content: `
                                 <p>გრაფიკული დიზაინისა და AI-ს კვეთაზე მრავალწლიანი გამოცდილებით, ვმუშაობდი ისეთ კომპანიებთან, როგორიცაა <i>Redberry, Upwork, Dunkin'</i> და <i>Subway</i>. AI ჩემთვის კრეატიულობის ახალი ჰორიზონტია, რომელიც ტრადიციულ დიზაინს სცდება.</p>
                                 <p>აქტიურად ვიყენებ <i>Stable Diffusion, LoRA მოდელებს, ControlNets</i> და <i>Adobe Creative Suite</i>-ს. ამ ცოდნას ვუზიარებ სტუდენტებს <i>თბილისის კომუნიკაციის სკოლაში</i>, სადაც ვასწავლი გენერაციულ AI-ს. მჯერა, AI არის აწმყო და მომავალი კრეატიულ ინდუსტრიაში.</p>
+                                <p><em>ამ ვორქშოპში გაგიზიარებთ როგორც კონკრეტულ ქეისებს, ასევე პრაქტიკულ რჩევებს AI ინსტრუმენტების გამოყენებასთან დაკავშირებით.</em></p>
                             `
                         },
                         { // 3
@@ -603,7 +731,11 @@
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">შედეგი:</span>
-                                    <p class="description">შეიქმნა საქართველოს ფოსტის ისტორიაში პირველი, ხელოვნური ინტელექტის მიერ გენერირებული საფოსტო მარკა, რომელმაც წარმატებით გააერთიანა მრავალფეროვანი არტისტული ხედვები.</p>
+                                    <p class="description">შეიქმნა საქართველოს ფოსტის ისტორიაში პირველი, ხელოვნური ინტელექტის მიერ გენერირებული საფოსტო მარკა, რომელმაც წარმატებით გააერთიანა მრავალფეროვანი არტისტული ხედვები – <em>ინოვაცია, რომელიც ხაზს უსვამს ტექნოლოგიისა და ხელოვნების შერწყმის შესაძლებლობებს.</em></p>
+                                </div>
+                                <div class="case-study-section">
+                                    <span class="label">ვიდეო მასალა:</span>
+                                    <p class="description"><a href="https://www.facebook.com/share/v/1YuX2VyMC5/?mibextid=wwXIfr" target="_blank">ნახეთ ვიდეო Facebook-ზე</a></p>
                                 </div>
                             `
                         },
@@ -617,11 +749,15 @@
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">გამოყენებული AI ტექნოლოგიები:</span>
-                                    <p class="description">პროექტში აქტიურად გამოვიყენეთ <i>Stable Diffusion</i> ვიზუალური ბაზის გენერაციისთვის. სპეციფიკური ანიმე სტილის მისაღწევად დატრენინგდა <i>커스텀 LoRA მოდელები</i>, ხოლო პერსონაჟების პოზებისა და კომპოზიციის ზუსტი კონტროლისთვის <i>ControlNets</i>-ის შესაძლებლობები გამოვიყენეთ.</p>
+                                    <p class="description">პროექტში აქტიურად გამოვიყენეთ <i>Stable Diffusion</i> ვიზუალური ბაზის გენერაციისთვის. სპეციფიკური ანიმე სტილის მისაღწევად დატრენინგდა <i>მორგებული LoRA მოდელები</i>, ხოლო პერსონაჟების პოზებისა და კომპოზიციის ზუსტი კონტროლისთვის <i>ControlNets</i>-ის შესაძლებლობები გამოვიყენეთ.</p>
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">შედეგი:</span>
-                                    <p class="description">შეიქმნა თვალშისაცემი და ორიგინალური ვიდეო რგოლი, რომელმაც წარმატებით შეაწყო მუსიკა და AI-გენერირებული ანიმაცია, მოიპოვა ფართო გამოხმაურება და გაზარდა ბრენდის ცნობადობა.</p>
+                                    <p class="description">შეიქმნა თვალშისაცემი და ორიგინალური ვიდეო რგოლი, რომელმაც წარმატებით შეაწყო მუსიკა და AI-გენერირებული ანიმაცია, მოიპოვა ფართო გამოხმაურება და გაზარდა ბრენდის ცნობადობა – <em>რაც აჩვენებს AI-ს ძალას მიზნობრივი, ეფექტური ვიზუალური კომუნიკაციის შექმნაში.</em></p>
+                                </div>
+                                <div class="case-study-section">
+                                    <span class="label">ვიდეო მასალა:</span>
+                                    <p class="description"><a href="https://www.facebook.com/share/v/1Bnkbwe6gQ/?mibextid=wwXIfr" target="_blank">ნახეთ ვიდეო Facebook-ზე</a></p>
                                 </div>
                             `
                         },
@@ -631,7 +767,7 @@
                             content: `
                                 <div class="case-study-section">
                                     <span class="label">ამოცანა:</span>
-                                    <p class="description">ლუდსახარშ "შავი ლომისა" და მოდის კომპანია "MachandMach"-ისთვის საჭირო იყო ბრენდის ვიზუალური იდენტობის შესაბამისი, უნიკალური და კრეატიული კონტენტის გენერაცია. მთავარი გამოწვევა იყო AI-ს მიერ შექმნილი ვიზუალების ზუსტი მორგება თითოეული ბრენდის სპეციფიკურ სტილსა და ფასეულობებზე.</p>
+                                    <p class="description">ლუდსახარშ \"შავი ლომისა\" და მოდის კომპანია \"MachandMach\"-ისთვის საჭირო იყო ბრენდის ვიზუალური იდენტობის შესაბამისი, უნიკალური და კრეატიული კონტენტის გენერაცია. მთავარი გამოწვევა იყო AI-ს მიერ შექმნილი ვიზუალების ზუსტი მორგება თითოეული ბრენდის სპეციფიკურ სტილსა და ფასეულობებზე.</p>
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">AI სტრატეგია:</span>
@@ -639,7 +775,11 @@
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">შედეგი:</span>
-                                    <p class="description">მივიღეთ მაღალი ხარისხის, უნიკალური ბრენდირებული ვიზუალური მასალა, რომელიც ეფექტურად გამოიყენება მარკეტინგულ კამპანიებსა და სოციალურ მედიაში, ზრდის მომხმარებლის ჩართულობას და აძლიერებს ბრენდის იდენტობას.</p>
+                                    <p class="description">მივიღეთ მაღალი ხარისხის, უნიკალური ბრენდირებული ვიზუალური მასალა, რომელიც ეფექტურად გამოიყენება მარკეტინგულ კამპანიებსა და სოციალურ მედიაში, ზრდის მომხმარებლის ჩართულობას და აძლიერებს ბრენდის იდენტობას – <em>ხაზს უსვამს AI-ს უნარს, შექმნას ღრმად პერსონალიზებული ვიზუალი.</em></p>
+                                </div>
+                                 <div class="case-study-section">
+                                    <span class="label">დამატებითი ინფორმაცია:</span>
+                                    <p class="description"><a href="https://www.facebook.com/blacklion.ge?mibextid=wwXIfr&mibextid=wwXIfr" target="_blank">შავი ლომი Facebook-ზე</a></p>
                                 </div>
                             `
                         },
@@ -657,8 +797,9 @@
                                 </div>
                                 <div class="case-study-section">
                                     <span class="label">შედეგი:</span>
-                                    <p class="description">მნიშვნელოვნად შემცირდა დრო დიზაინის შექმნაზე, გაიზარდა გუნდის პროდუქტიულობა და კრეატიული იდეების სწრაფი ვიზუალიზაციის შესაძლებლობა. ამან კომპანიას საშუალება მისცა, უფრო მოქნილად და ეფექტურად ეპასუხა კლიენტების მოთხოვნებზე.</p>
+                                    <p class="description">მნიშვნელოვნად შემცირდა დრო დიზაინის შექმნაზე, გაიზარდა გუნდის პროდუქტიულობა და კრეატიული იდეების სწრაფი ვიზუალიზაციის შესაძლებლობა. ამან კომპანიას საშუალება მისცა, უფრო მოქნილად და ეფექტურად ეპასუხა კლიენტების მოთხოვნებზე – <em>რაც პირდაპირ აისახება ბიზნესის ეფექტურობაზე.</em></p>
                                 </div>
+                                <p><em>ამ ქეისების მიმოხილვის შემდეგ, ვნახოთ, როგორ მუშაობს AI ტექსტისა და ვიზუალის სინთეზში უფრო ფართოდ.</em></p>
                             `
                         },
                         { // 7
@@ -674,6 +815,7 @@
                                     <li><b>კონცეპტუალური დიზაინი:</b> პროდუქტის, სარეკლამო კამპანიის ან თუნდაც თხრობითი სცენარების სწრაფი ვიზუალიზაცია.</li>
                                     <li><b>ავტომატიზებული კონტენტის ნაკადები:</b> მაგალითად, სტატიის ძირითადი პუნქტებიდან ავტომატურად გენერირებული ილუსტრაციები.</li>
                                 </ul>
+                                <p>ეს მიდგომა მომხმარებელს მეტ კონტროლს აძლევს და საშუალებას იძლევა, შეიქმნას ბევრად უფრო ზუსტი, კომპლექსური და მხატვრულად ღირებული გამოსახულებები. თუმცა, იგი ასევე მოითხოვს prompt-ის უფრო ღრმა გააზრებასა და ექსპერიმენტირებას.</p>
                             `
                         },
                         { // 8
@@ -814,7 +956,10 @@
                                             <b>YouTube:</b> <span class="resource-note">ვიდეო გაკვეთილები, მიმოხილვები და სიახლეები.</span>
                                             <ul>
                                                 <li><a href="https://www.youtube.com/@TwoMinutePapers" target="_blank">Two Minute Papers</a> <span class="resource-note">AI კვლევების მოკლე მიმოხილვები.</span></li>
-                                                <li>მოძებნეთ არხები, რომლებიც Stable Diffusion-ს, Midjourney-ს და სხვა AI ინსტრუმენტებს ეხება.</li>
+                                                <li><a href="https://www.youtube.com/@lexfridman" target="_blank">Lex Fridman Podcast</a> <span class="resource-note">ღრმა დისკუსიები AI მკვლევარებთან (და არა მარტო).</span></li>
+                                                <li><a href="https://www.youtube.com/@bycloudAI" target="_blank">ByCloud AI</a> <span class="resource-note">AI გაკვეთილები, სიახლეები და ხელსაწყოები.</span></li>
+                                                <li><a href="https://www.youtube.com/@matthew_berman" target="_blank">Matthew Berman</a> <span class="resource-note">AI კინემატოგრაფია და გენერაციული ხელოვნება.</span></li>
+                                                <li><a href="https://www.youtube.com/@WesRoth" target="_blank">WesRoth</a> <span class="resource-note">AI გაკვეთილები და კრეატიული AI პროექტები.</span></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -832,14 +977,14 @@
                                     <p class="anim-item">მზად ვარ, ვუპასუხო თქვენს შეკითხვებს.</p>
                                     <div class="social-links anim-item">
                                         <p>დამიკავშირდით:</p>
-                                        <a href="https://www.linkedin.com/in/john-kvezereli/" target="_blank" class="social-link">LinkedIn</a> | 
+                                        <a href="https://www.linkedin.com/in/john-kvezereli/" target="_blank" class="social-link">LinkedIn</a>
                                         <a href="YOUR_FACEBOOK_URL_HERE" target="_blank" class="social-link">Facebook</a>
                                     </div>
                                 </div>
-                            `,
-                        }
-                    ]
-                };
+                            `
+                        } // This is the end of the last intended slide
+                    ] // This is the correct end of the slides array
+                }; // This is the end of the data() return object
             },
             computed: {
                 currentSlide() {
@@ -910,38 +1055,38 @@
                     if (!currentSlideEl) return;
                     
                     const animItems = Array.from(currentSlideEl.querySelectorAll('.anim-item')); 
-                    const contentParagraphs = Array.from(currentSlideEl.querySelectorAll('.slide-content-wrapper p'));
+                    const contentParagraphs = Array.from(currentSlideEl.querySelectorAll('.slide-content-wrapper p, .slide-centered-text > p:not(.social-links p)')); // Include Q&A paragraphs
                     const contentListItems = Array.from(currentSlideEl.querySelectorAll('.slide-content-wrapper li'));
                     const resourceSectionElements = Array.from(currentSlideEl.querySelectorAll('.resource-section h3, .resource-section .resource-note, .resource-section a'));
                    
                     animItems.forEach(el => {
-                        let initialY = 12; /* Adjusted default */
+                        let initialY = 10; /* Adjusted default */
                         if (el.classList.contains('presenter-anim') && this.currentSlide.isFirstSlide) {
-                            initialY = 18; /* Adjusted */
+                            initialY = 15; /* Adjusted */
                         } else if (el.classList.contains('slide-title') && this.currentSlide.isFirstSlide) {
                             initialY = 0; 
-                        } else if (el.closest('.slide-centered-text') || el.closest('.slide-title-centered')) {
-                             initialY = 15; /* Adjusted */
+                        } else if (el.closest('.slide-centered-text') || el.classList.contains('slide-title-centered')) { // Check class directly for centered title
+                             initialY = 12; /* Adjusted */
                         }
                         anime.set(el, { opacity: 0, translateY: initialY });
                     });
                     
                     [...contentParagraphs, ...contentListItems, ...resourceSectionElements.filter(el => !el.classList.contains('anim-item'))].forEach(el => {
                         if (!el.classList.contains('anim-item')) { 
-                           anime.set(el, { opacity: 0, translateY: 12 }); /* Adjusted */
+                           anime.set(el, { opacity: 0, translateY: 10 }); /* Adjusted */
                         }
                     });
 
 
                     let currentDelay = 0;
-                    const staggerMs = 45; /* Slightly adjusted stagger */
-                    const animationDuration = anime.getVarValue('--animation-duration') || 450; /* Matched to CSS var */
+                    const staggerMs = 40; /* Slightly adjusted stagger */
+                    const animationDuration = anime.getVarValue('--animation-duration') || 400; /* Matched to CSS var */
                     const animationEasing = anime.getVarValue('--animation-easing') || 'cubic-bezier(0.35, 0.9, 0.25, 1)'; /* Matched to CSS var */
 
                     animItems.forEach(item => {
                         let itemDuration = animationDuration;
                         if (item.classList.contains('presenter-anim') && this.currentSlide.isFirstSlide) {
-                            itemDuration += 100; /* Adjusted duration for presenter on first slide */
+                            itemDuration += 80; /* Adjusted duration for presenter on first slide */
                         }
 
                         anime({
@@ -976,7 +1121,7 @@
                             translateY: 0, 
                             duration: animationDuration, 
                             easing: animationEasing,
-                            delay: anime.stagger(staggerMs / 1.4, { start: currentDelay }) /* Adjusted stagger for content */
+                            delay: anime.stagger(staggerMs / 1.5, { start: currentDelay }) /* Adjusted stagger for content */
                         });
                     }
                 },
